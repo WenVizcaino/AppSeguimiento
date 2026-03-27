@@ -4,13 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class enteconformador extends Model
+class Enteconformador extends Model
 {
-    protected $table = 'tbl_enteconformador';
-
-    protected $primaryKey = 'NIS';
-
-    public $timestamps = false;
+    protected $table      = 'tbl_enteconformador'; // ← nombre exacto de tu tabla
+    protected $primaryKey = 'Numdoc';              // ← clave primaria correcta
+    public $timestamps    = false;
 
     protected $fillable = [
         'tdoc',
@@ -18,8 +16,6 @@ class enteconformador extends Model
         'RazonSocial',
         'Direccion',
         'Telefono',
-        'CorreoInstitucional'
-
+        'CorreoInstitucional',
     ];
-
 }

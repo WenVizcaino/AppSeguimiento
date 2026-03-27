@@ -1,24 +1,27 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AprendicesController;
+use App\Http\Controllers\CentrodeformacionController;
+use App\Http\Controllers\EnteconformadorController;
+use App\Http\Controllers\FichadecaracterizacionController;
+use App\Http\Controllers\BitacoraController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-use App\Http\Controllers\AprendicesController;
-Route::resource('aprendices', AprendicesController::class);
+Route::resource('aprendices', AprendicesController::class)
+    ->parameters(['aprendices' => 'aprendices']);
 
-use App\Http\Controllers\CentrodeformacionController;
-Route::resource('centrodeformacion', CentrodeformacionController::class);
+Route::resource('centrodeformacion', CentrodeformacionController::class)
+    ->parameters(['centrodeformacion' => 'centrodeformacion']);
 
-use App\Http\Controllers\EnteconformadorController;
-Route::resource('enteconformador', EnteconformadorController::class);
+Route::resource('enteconformador', EnteconformadorController::class)
+    ->parameters(['enteconformador' => 'enteconformador']);
 
-use App\Http\Controllers\FichadecaracterizacionController;
-Route::resource('fichadecaracterizacion', FichadecaracterizacionController::class);
+Route::resource('fichadecaracterizacion', FichadecaracterizacionController::class)
+    ->parameters(['fichadecaracterizacion' => 'fichadecaracterizacion']);
 
-/* NUEVA RUTA PARA BITACORAS */
-
-use App\Http\Controllers\BitacoraController;
-Route::resource('bitacora', BitacoraController::class);
+Route::resource('bitacora', BitacoraController::class)
+    ->parameters(['bitacora' => 'bitacora']);

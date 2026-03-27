@@ -9,7 +9,7 @@ class FichadecaracterizacionController extends Controller
 {
     public function index()
     {
-        $fichas = fichadecaracterizacion::all();
+        $fichas = fichadecaracterizacion::paginate(10);
         return view('fichadecaracterizacion.index', compact('fichas'));
     }
 
@@ -21,16 +21,18 @@ class FichadecaracterizacionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Codigo' => 'required',
-            'Denominacion' => 'required',
-            'Direccion' => 'required',
-            'Observaciones' => 'required'
+            'Codigo'        => 'required',
+            'Denominacion'  => 'required',
+            'Cupo'          => 'required|integer',
+            'fechaInicio'   => 'required|date',
+            'fechaFin'      => 'required|date|after:fechaInicio',
+            'Observaciones' => 'required',
         ]);
 
         fichadecaracterizacion::create($request->all());
 
         return redirect()->route('fichadecaracterizacion.index')
-            ->with('success','Registro creado correctamente');
+            ->with('success', 'Registro creado correctamente');
     }
 
     public function show(fichadecaracterizacion $fichadecaracterizacion)
@@ -46,16 +48,18 @@ class FichadecaracterizacionController extends Controller
     public function update(Request $request, fichadecaracterizacion $fichadecaracterizacion)
     {
         $request->validate([
-            'Codigo' => 'required',
-            'Denominacion' => 'required',
-            'Direccion' => 'required',
-            'Observaciones' => 'required'
+            'Codigo'        => 'required',
+            'Denominacion'  => 'required',
+            'Cupo'          => 'required|integer',
+            'fechaInicio'   => 'required|date',
+            'fechaFin'      => 'required|date|after:fechaInicio',
+            'Observaciones' => 'required',
         ]);
 
         $fichadecaracterizacion->update($request->all());
 
         return redirect()->route('fichadecaracterizacion.index')
-            ->with('success','Registro actualizado correctamente');
+            ->with('success', 'Registro actualizado correctamente');
     }
 
     public function destroy(fichadecaracterizacion $fichadecaracterizacion)
@@ -63,6 +67,9 @@ class FichadecaracterizacionController extends Controller
         $fichadecaracterizacion->delete();
 
         return redirect()->route('fichadecaracterizacion.index')
-            ->with('success','Registro eliminado correctamente');
+            ->with('success', 'Registro eliminado correctamente');
     }
 }
+
+
+

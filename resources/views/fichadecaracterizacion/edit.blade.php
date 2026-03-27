@@ -1,36 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Editar ficha</title>
+    <meta charset="UTF-8">
+    <title>Editar Ficha de Caracterización</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
 
-<h1>Editar ficha</h1>
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-warning">
+            Editar Ficha de Caracterización
+        </div>
+        <div class="card-body">
 
-<form action="{{ route('fichadecaracterizacion.update',$fichadecaracterizacion) }}" method="POST">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-    @csrf
-    @method('PUT')
+            <form action="{{ route('fichadecaracterizacion.update', $fichadecaracterizacion) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-    Codigo
-    <input type="text" name="Codigo" value="{{ $fichadecaracterizacion->Codigo }}"><br><br>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Código</label>
+                        <input type="text" name="Codigo"
+                               class="form-control @error('Codigo') is-invalid @enderror"
+                               value="{{ old('Codigo', $fichadecaracterizacion->Codigo) }}">
+                        @error('Codigo') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
 
-    Denominacion
-    <input type="text" name="Denominacion" value="{{ $fichadecaracterizacion->Denominacion }}"><br><br>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Denominación</label>
+                        <input type="text" name="Denominacion"
+                               class="form-control @error('Denominacion') is-invalid @enderror"
+                               value="{{ old('Denominacion', $fichadecaracterizacion->Denominacion) }}">
+                        @error('Denominacion') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
 
-    Direccion
-    <input type="text" name="Direccion" value="{{ $fichadecaracterizacion->Direccion }}"><br><br>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Cupo</label>
+                        <input type="number" name="Cupo"
+                               class="form-control @error('Cupo') is-invalid @enderror"
+                               value="{{ old('Cupo', $fichadecaracterizacion->Cupo) }}">
+                        @error('Cupo') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
 
-    Observaciones
-    <input type="text" name="Observaciones" value="{{ $fichadecaracterizacion->Observaciones }}"><br><br>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Fecha Inicio</label>
+                        <input type="date" name="fechaInicio"
+                               class="form-control @error('fechaInicio') is-invalid @enderror"
+                               value="{{ old('fechaInicio', $fichadecaracterizacion->fechaInicio?->format('Y-m-d')) }}">
+                        @error('fechaInicio') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
 
-    <button type="submit">Actualizar</button>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Fecha Fin</label>
+                        <input type="date" name="fechaFin"
+                               class="form-control @error('fechaFin') is-invalid @enderror"
+                               value="{{ old('fechaFin', $fichadecaracterizacion->fechaFin?->format('Y-m-d')) }}">
+                        @error('fechaFin') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
 
-</form>
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Observaciones</label>
+                        <textarea name="Observaciones" rows="3"
+                                  class="form-control @error('Observaciones') is-invalid @enderror">{{ old('Observaciones', $fichadecaracterizacion->Observaciones) }}</textarea>
+                        @error('Observaciones') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
+                </div>
 
-<br>
+                <button class="btn btn-warning">Actualizar</button>
+                <a href="{{ route('fichadecaracterizacion.index') }}" class="btn btn-secondary">Cancelar</a>
+            </form>
 
-<a href="{{ route('fichadecaracterizacion.index') }}">Volver</a>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

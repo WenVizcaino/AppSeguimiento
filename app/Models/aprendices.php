@@ -8,8 +8,11 @@ class aprendices extends Model
 {
     protected $table = 'tbl_aprendices';
     protected $primaryKey = 'NIS';
-    public $timestamps = false;
 
+    public $timestamps = false;
+    protected $casts = [
+        'fechaNacimiento' => 'date',
+    ];
     protected $fillable = [
         'Numdoc',
         'Nombres',
@@ -19,6 +22,6 @@ class aprendices extends Model
         'CorreoInstitucional',
         'CorreoPersonal',
         'sexo',
-        'fechaNacimiento'
+        'fechaNacimiento',
     ];
 }

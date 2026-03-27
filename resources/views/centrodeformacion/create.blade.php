@@ -14,34 +14,57 @@
         </div>
         <div class="card-body">
 
-            <form>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            {{-- ✅ action, method y @csrf --}}
+            <form action="{{ route('centrodeformacion.store') }}" method="POST">
+                @csrf
+
+
                 <div class="mb-3">
-                    <label>Numdoc</label>
-                    <input type="text" class="form-control">
+                    <label class="form-label">Código</label>
+                    <input type="text" name="Codigo"
+                           class="form-control @error('Codigo') is-invalid @enderror"
+                           value="{{ old('Codigo') }}">
+                    @error('Codigo') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label>Código</label>
-                    <input type="text" class="form-control">
+                    <label class="form-label">Denominación</label>
+                    <input type="text" name="Denominacion"
+                           class="form-control @error('Denominacion') is-invalid @enderror"
+                           value="{{ old('Denominacion') }}">
+                    @error('Denominacion') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label>Denominación</label>
-                    <input type="text" class="form-control">
+                    <label class="form-label">Dirección</label>
+                    <input type="text" name="Direccion"
+                           class="form-control @error('Direccion') is-invalid @enderror"
+                           value="{{ old('Direccion') }}">
+                    @error('Direccion') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label>Dirección</label>
-                    <input type="text" class="form-control">
-                </div>
-
-                <div class="mb-3">
-                    <label>Observaciones</label>
-                    <textarea class="form-control"></textarea>
+                    <label class="form-label">Observaciones</label>
+                    {{-- ✅ textarea usa old() entre las etiquetas, no value= --}}
+                    <textarea name="Observaciones"
+                              class="form-control @error('Observaciones') is-invalid @enderror"
+                              rows="3">{{ old('Observaciones') }}</textarea>
+                    @error('Observaciones') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
                 <button class="btn btn-success">Guardar</button>
-                <a href="index.html" class="btn btn-secondary">Cancelar</a>
+                {{-- ✅ ruta Laravel en lugar de index.html --}}
+                <a href="{{ route('centrodeformacion.index') }}" class="btn btn-secondary">Cancelar</a>
             </form>
 
         </div>

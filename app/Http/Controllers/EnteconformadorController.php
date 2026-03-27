@@ -7,35 +7,26 @@ use Illuminate\Http\Request;
 
 class EnteconformadorController extends Controller
 {
-    /**
-     * Mostrar todos los registros
-     */
     public function index()
     {
-        $enteconformadores = enteconformador::all();
+        $enteconformadores = enteconformador::paginate(10); // ← paginate en lugar de all()
         return view('enteconformador.index', compact('enteconformadores'));
     }
 
-    /**
-     * Mostrar formulario de creación
-     */
     public function create()
     {
         return view('enteconformador.create');
     }
 
-    /**
-     * Guardar nuevo registro
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'tdoc' => 'required',
-            'Numdoc' => 'required',
-            'RazonSocial' => 'required',
-            'Direccion' => 'required',
-            'Telefono' => 'required',
-            'CorreoInstitucional' => 'required|email',
+            'tdoc'               => 'required',
+            'Numdoc'             => 'required',
+            'RazonSocial'        => 'required|string|max:200',
+            'Direccion'          => 'required|string|max:200',
+            'Telefono'           => 'required|string|max:20',
+            'CorreoInstitucional'=> 'required|email|max:200',
         ]);
 
         enteconformador::create($request->all());
@@ -44,37 +35,25 @@ class EnteconformadorController extends Controller
             ->with('success', 'Registro creado correctamente');
     }
 
-    /**
-     * Mostrar un registro específico
-     */
     public function show(enteconformador $enteconformador)
     {
         return view('enteconformador.show', compact('enteconformador'));
     }
 
-    /**
-     * Mostrar formulario de edición
-     */
     public function edit(enteconformador $enteconformador)
     {
         return view('enteconformador.edit', compact('enteconformador'));
     }
 
-    /**
-     * Actualizar registro
-     */
     public function update(Request $request, enteconformador $enteconformador)
     {
         $request->validate([
-            'Numdoc' => 'required',
-            'Nombres' => 'required',
-            'Apellidos' => 'required',
-            'Direccion' => 'required',
-            'Telefono' => 'required',
-            'CorreoInstitucional' => 'required|email',
-            'CorreoPersonal' => 'required|email',
-            'sexo' => 'required',
-            'fechaNacimiento' => 'required|date',
+            'tdoc'               => 'required',
+            'Numdoc'             => 'required',
+            'RazonSocial'        => 'required|string|max:200',
+            'Direccion'          => 'required|string|max:200',
+            'Telefono'           => 'required|string|max:20',
+            'CorreoInstitucional'=> 'required|email|max:200',
         ]);
 
         $enteconformador->update($request->all());
@@ -83,9 +62,6 @@ class EnteconformadorController extends Controller
             ->with('success', 'Registro actualizado correctamente');
     }
 
-    /**
-     * Eliminar registro
-     */
     public function destroy(enteconformador $enteconformador)
     {
         $enteconformador->delete();

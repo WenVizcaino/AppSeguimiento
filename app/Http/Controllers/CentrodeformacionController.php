@@ -9,8 +9,8 @@ class CentrodeformacionController extends Controller
 {
     public function index()
     {
-        $centros = centrodeformacion::all();
-        return view('centrodeformacion.index', compact('centros'));
+        $listado = centrodeformacion::paginate(10);
+        return view('centrodeformacion.index', compact('listado'));
     }
 
     public function create()
@@ -20,16 +20,16 @@ class CentrodeformacionController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'Numdoc' => 'required',
-            'Codigo' => 'required',
-            'Denominacion' => 'required',
+        $validated = $request->validate([
+            'Codigo'        => 'required|string|max:50|unique:tbl_centrodeformacion,Codigo',
+            'Denominacion'  => 'required|string|max:200',
+            'Direccion'     => 'required|string|max:200',
+            'Observaciones' => 'nullable|string|max:500',
         ]);
 
-        centrodeformacion::create($request->all());
-
+        centrodeformacion::create($validated);
         return redirect()->route('centrodeformacion.index')
-            ->with('success', 'Centro creado correctamente');
+            ->with('success', "Centro de formacion creado correctamente");
     }
 
     public function show(centrodeformacion $centrodeformacion)
@@ -44,23 +44,22 @@ class CentrodeformacionController extends Controller
 
     public function update(Request $request, centrodeformacion $centrodeformacion)
     {
-        $request->validate([
-            'Numdoc' => 'required',
-            'Codigo' => 'required',
-            'Denominacion' => 'required',
+        $validated = $request->validate([
+            'Codigo'        => 'required|string|max:50|unique:tbl_centrodeformacion,Codigo,' . $centrodeformacion->NIS . ',NIS',
+            'Denominacion'  => 'required|string|max:200',
+            'Direccion'     => 'required|string|max:200',
+            'Observaciones' => 'nullable|string|max:500',
         ]);
 
-        $centrodeformacion->update($request->all());
-
+        $centrodeformacion->update($validated);
         return redirect()->route('centrodeformacion.index')
-            ->with('success', 'Centro actualizado correctamente');
+            ->with('success', "Centro de formacion actualizado correctamente");
     }
 
     public function destroy(centrodeformacion $centrodeformacion)
     {
         $centrodeformacion->delete();
-
         return redirect()->route('centrodeformacion.index')
-            ->with('success', 'Centro eliminado correctamente');
+            ->with('success', "Centro de formacion eliminado correctamente");
     }
 }
